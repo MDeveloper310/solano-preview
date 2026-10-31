@@ -38,3 +38,4 @@ fieldset{border:0;padding:0;margin:0}legend{font-weight:700;font-size:1.1rem}
 @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 .tile{transition:transform .2s}.tile:hover{transform:translateY(-2px)}
 [hidden]{display:none!important}
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}.err{color:#ff8a8a}.bhv{width:100%;border:0;border-radius:10px;background:transparent}.legal{max-width:760px}.legal h2{margin-top:28px;font-size:1.25rem}.legal p,.legal li{color:#c9ccd2;line-height:1.65}.tmpl{border:1px solid #ff8a8a88;background:#ff5e7e14;color:#ffd0d0;border-radius:12px;padding:12px 14px;font-weight:600}
