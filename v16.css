@@ -49,3 +49,5 @@ form.nl input,form.nl select,form.lead input,form.lead select,form.lead textarea
 /* scroll interaction */
 @media(prefers-reduced-motion:no-preference){main .card,main .tile{animation:fade16 linear both;animation-timeline:view();animation-range:entry 0% cover 22%}}
 @keyframes fade16{from{opacity:.35;transform:translateY(18px)}to{opacity:1;transform:none}}
+.fb15:not(.on){visibility:hidden;pointer-events:none}
+.bigpl{font-size:1.6rem}
