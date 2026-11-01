@@ -25,8 +25,6 @@ d.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[hre
  if(a.dataset.map16||/google\.[a-z.]+\/maps|maps\.google|openstreetmap|maps\.apple/.test(s)){e.preventDefault();showMap();return}
  if(/instagram|tiktok|youtube/.test(h)){a.target='_blank';a.rel='noopener noreferrer';return}
  e.preventDefault();showExt(s,a)},true);
-// share: native sheet or copy, never off-site
-d.querySelectorAll('.share').forEach(x=>{if(!x.querySelector('.sh16b')){const b=d.createElement('button');b.type='button';b.className='ghost sh16b';b.textContent='Share';b.onclick=()=>navigator.share?navigator.share({title:d.title,url:location.href}).catch(()=>{}):(navigator.clipboard.writeText(location.href),b.textContent='Link copied ✓');x.prepend(b)}});
 // newsletter: post in the background, thank on-site (no redirect)
 d.querySelectorAll('form.nl').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();e.stopImmediatePropagation();const fd=new FormData(f);fd.append('_subject','Newsletter signup');fd.append('_template','table');fd.append('kind','newsletter');
  fetch('https://formsubmit.co/ajax/dd668362a53c8f8c38bcc1fdba5c473c',{method:'POST',body:fd,headers:{Accept:'application/json'}}).catch(()=>{});f.innerHTML="<p class=ok16>✓ You're on the list. Check your inbox to confirm.</p>"},true));
