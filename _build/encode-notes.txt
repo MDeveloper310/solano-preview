@@ -1,0 +1,13 @@
+iPhone HDR (HLG) .mov -> web mp4 (what was used for every clip in /media):
+TM="zscale=t=linear:npl=203,format=gbrpf32le,zscale=p=bt709,tonemap=hable:desat=0:peak=4,zscale=t=bt709:m=bt709:r=tv,format=yuv420p,scale=720:1280:flags=lanczos"
+ffmpeg -ss START -t DUR -i in.mov -vf "$TM,format=yuv420p" -an -c:v libx264 -profile:v high -preset slow -crf 27 -maxrate 1500k -bufsize 3000k -movflags +faststart -r 30 media/SLUG.mp4
+Omni in-room dining clip also got: colorbalance=rs=-0.05:gs=0.05:rm=-0.12:gm=0.08:bm=-0.02:rh=-0.05,eq=saturation=0.75 (de-pink).
+Source clips (all Crenshaw Visuals, /workspace/crenshaw-visuals-social/dropbox-proof/):
+ fogao-gaucho-vacaville      <- Video Sep 09 2026, 1 49 16 AM.mov  4s-28s (end logo card cut)
+ omni-sf-in-room-dining      <- Video Sep 26 2026, 11 05 40 PM.mov 0-22s (OMNI watermark segment cut)
+ hilton-garden-inn-fairfield-food <- Video Aug 25 2026, 9 39 16 PM.mov 18-42s (end logo card cut)
+ tableside-flambe            <- Video Aug 19 2026, 8 19 16 PM.mov  0-16.9s (venue unconfirmed)
+ omni-sf-stay                <- Video Sep 27 2026, 3 21 51 PM.mov  0-28s
+ omni-sf-lobby               <- Video Sep 27 2026, 3 33 01 PM.mov  2-18s
+ crenshaw-visuals-showreel   <- /workspace/commercial/CV-Commercial-v2.mp4 (original synthesized music; used on /advertise/ only)
+Audio removed from all client clips (music rights in the original exports unknown).

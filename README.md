@@ -1,0 +1,47 @@
+# Scroll California (rebuild, Nov 1 2026)
+
+Food-first California video guide. Static HTML, no framework, no database calls, no third-party scripts.
+Every video is Crenshaw Visuals' own footage, self-hosted in `/media/` (H.264 720x1280 + JPG poster).
+
+## Preview locally
+```
+cd <this folder>
+python3 -m http.server 8765
+# open http://localhost:8765  (use the phone-sized view in browser dev tools)
+```
+
+## Edit things
+| What | Where |
+|---|---|
+| Places, cities, video titles/descriptions | `_build/content.json`, then run `python3 _build/build.py` |
+| About, Advertise/media kit, Submit, Newsletter, Privacy, Terms text | `_build/pages/*.html`, then rebuild |
+| Prices on the Advertise page | `_build/pages/advertise.html` (look for `PRICING PLACEHOLDER`) |
+| **Robots switch** (index / noindex for the whole site) | `ROBOTS = ...` at the top of `_build/build.py`, then rebuild. It updates every page's `<meta name=robots>` and `robots.txt`. Default: `index,follow` (launch). |
+| Tracking endpoint, form endpoint, newsletter endpoint, Stripe link, sponsors | `assets/config.js` (no rebuild needed) |
+
+### Add a new video
+1. Compress: `ffmpeg -i in.mov -vf "scale=720:1280" -an -c:v libx264 -crf 27 -maxrate 1500k -bufsize 3000k -movflags +faststart media/<slug>.mp4`
+   (iPhone HDR clips: add the tonemap filter used in `_build/encode-notes.txt`.)
+2. Poster: `ffmpeg -ss 3 -i media/<slug>.mp4 -frames:v 1 -vf scale=540:960 -q:v 5 media/<slug>.jpg`
+3. Add an entry to `videos` (and the place/city if new) in `_build/content.json`, run `python3 _build/build.py`.
+   Sitemap, OG share images, JSON-LD and city/category pages all regenerate.
+
+## What is connected and what is not
+| Piece | Status |
+|---|---|
+| Video feed, place/city/category/video pages, sitemap, robots, OG tags, JSON-LD | Working |
+| Forms (Submit a spot, Sponsor inquiry) | Wired to the **same FormSubmit relay the old site used** (`formEndpoint` in config.js). Not test-submitted during the rebuild. Send one test yourself. |
+| Newsletter | **Not connected to a newsletter tool.** Signups currently go through the same form relay (subject "Newsletter signup"), so emails land in the inbox. Set `newsletterEndpoint` once a tool (beehiiv etc.) is chosen. |
+| Visit / video-view / sponsor-click tracking | **Not connected.** `assets/track.js` is a cookie-free stub; set `trackEndpoint` to switch on. Add `?sc_debug=1` to any URL to watch events in the console. |
+| Sponsored slots | Built, **hidden until a real sponsor is added** to `sponsors` in config.js. |
+| Stripe / payments | **Not set.** Add a Stripe Payment Link to `stripeLink` and a "Pay for a package" button appears on /advertise/. |
+| Supabase | Not used by the new site (no key in the code). The old tables are untouched. |
+
+### Tracking endpoint format
+`track.js` sends `POST` with a text/plain JSON body: `{"type":"pageview|video_view|sponsor_impression|sponsor_click|outbound_click|share|form_submit","path":"/...","ref":"referrer-host","label":"...","ts":1730000000000}`.
+Any collector that accepts that works (a tiny Cloudflare Worker, a Supabase Edge Function writing to an `events` table, or a self-hosted Umami/Plausible with a small adapter). Nothing is sent when DNT or Global Privacy Control is on.
+
+## Old site
+The previous site (784 pages, scraped YouTube feed, v2-v17 files) is preserved on the branch `backup-before-rebuild-2026-11-01`.
+Common old URLs (/media-kit/, /apply/, /claim/, /contact/, ...) redirect to their new equivalents. `sw.js` is a kill switch
+that clears the old service worker's caches for returning visitors; keep it.

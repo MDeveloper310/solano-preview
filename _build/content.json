@@ -1,0 +1,161 @@
+{
+  "places": [
+    {
+      "slug": "fogao-gaucho-vacaville",
+      "name": "Fogão Gaúcho Brazilian Steakhouse",
+      "type": "Restaurant",
+      "cuisine": "Brazilian steakhouse (churrascaria)",
+      "category": "restaurants",
+      "city": "vacaville",
+      "street": "909 Merchant St",
+      "zip": "95688",
+      "lat": 38.347635,
+      "lng": -121.995226,
+      "website": "https://fogaogaucho.com/",
+      "client": true,
+      "short": "Rodízio-style Brazilian steakhouse with tableside carving and a serious cocktail bar.",
+      "why": [
+        "Gaúcho-style servers carve the meat right at your table, straight off the skewer. That's the whole show, and it's a good one.",
+        "Get to the bar early. In our footage the bartenders shake and pour every drink by hand, and the sparkling pours come with a little theater.",
+        "The dining room has a floor-to-ceiling wine wall and a spread of sides to build your plate around the meat.",
+        "Look for the bronze bull out front."
+      ],
+      "good_for": [
+        "Date night",
+        "Birthdays and groups",
+        "Big appetites"
+      ]
+    },
+    {
+      "slug": "omni-san-francisco-hotel",
+      "name": "Omni San Francisco Hotel",
+      "type": "Hotel",
+      "category": "hotels",
+      "city": "san-francisco",
+      "street": "500 California St",
+      "zip": "94104",
+      "website": "https://www.omnihotels.com/hotels/san-francisco",
+      "client": true,
+      "short": "Downtown hotel on the cable car line with a grand staircase lobby and in-room dining done right.",
+      "why": [
+        "It sits at California and Montgomery, right on the cable car line, so the ride is part of arriving.",
+        "The lobby is the photo: a sweeping staircase, crystal chandeliers and dark wood.",
+        "In-room dining shows up under silver cloches. In our shoot that meant a burger and fries, a berry dessert and a drink by the window with the downtown towers outside."
+      ],
+      "good_for": [
+        "A San Francisco stay",
+        "Room-service nights",
+        "Photos"
+      ]
+    },
+    {
+      "slug": "hilton-garden-inn-fairfield",
+      "name": "Hilton Garden Inn Fairfield",
+      "type": "Hotel",
+      "category": "hotels",
+      "city": "fairfield",
+      "street": "2200 Gateway Ct",
+      "zip": "94533",
+      "website": "https://www.hilton.com/en/hotels/oakfhgi-hilton-garden-inn-fairfield/",
+      "client": true,
+      "short": "Hotel off I-80 with an on-site restaurant and bar serving dinner and drinks.",
+      "why": [
+        "The on-site restaurant and bar is open to guests for dinner and drinks.",
+        "In our footage: tacos, chips, a cold martini, a dragon-fruit drink, and cocktails out on the patio.",
+        "It's off I-80 near Solano Town Center, so it works as a stop between the Bay and Sacramento or wine country."
+      ],
+      "good_for": [
+        "Road-trip stopover",
+        "Dinner without leaving the hotel",
+        "Patio drinks"
+      ]
+    }
+  ],
+  "cities": [
+    {
+      "slug": "vacaville",
+      "name": "Vacaville",
+      "intro": "Vacaville sits on I-80 between the Bay Area and Sacramento. Here's what we've filmed there so far, starting with a Brazilian steakhouse worth the drive."
+    },
+    {
+      "slug": "fairfield",
+      "name": "Fairfield",
+      "intro": "Fairfield is an easy I-80 stop between San Francisco and Sacramento, and close to wine country. Here's where we've eaten and filmed."
+    },
+    {
+      "slug": "san-francisco",
+      "name": "San Francisco",
+      "intro": "San Francisco food and stays, filmed by us. We're starting downtown, on the cable car line."
+    }
+  ],
+  "videos": [
+    {
+      "slug": "fogao-gaucho-vacaville",
+      "title": "Brazilian steakhouse night at Fogão Gaúcho",
+      "desc": "Hand-shaken cocktails at the bar, tableside carving off the skewer, and a wine wall that takes up the whole room. Vacaville, CA.",
+      "place": "fogao-gaucho-vacaville",
+      "city": "vacaville",
+      "cats": [
+        "restaurants"
+      ],
+      "duration": 24
+    },
+    {
+      "slug": "tableside-flambe",
+      "title": "Bananas foster, flambéed tableside",
+      "desc": "A pan of bananas, a burst of flame, and a pour of sauce over vanilla ice cream. The kind of dessert you order for the show.",
+      "place": null,
+      "city": null,
+      "cats": [
+        "restaurants"
+      ],
+      "duration": 17
+    },
+    {
+      "slug": "omni-sf-in-room-dining",
+      "title": "In-room dining at Omni San Francisco",
+      "desc": "Silver cloches off, a burger and fries, a berry dessert and a drink by the window. Room service, the way it should look.",
+      "place": "omni-san-francisco-hotel",
+      "city": "san-francisco",
+      "cats": [
+        "restaurants",
+        "hotels"
+      ],
+      "duration": 22
+    },
+    {
+      "slug": "hilton-garden-inn-fairfield-food",
+      "title": "Tacos and cocktails at Hilton Garden Inn Fairfield",
+      "desc": "Tacos, chips, a cold martini and patio drinks from the hotel's own restaurant and bar. Fairfield, CA.",
+      "place": "hilton-garden-inn-fairfield",
+      "city": "fairfield",
+      "cats": [
+        "restaurants",
+        "hotels"
+      ],
+      "duration": 24
+    },
+    {
+      "slug": "omni-sf-stay",
+      "title": "A San Francisco stay: cable car to room service",
+      "desc": "Cable car outside, elevator up, robe on, room service by the window. A night at the Omni San Francisco.",
+      "place": "omni-san-francisco-hotel",
+      "city": "san-francisco",
+      "cats": [
+        "hotels"
+      ],
+      "duration": 28
+    },
+    {
+      "slug": "omni-sf-lobby",
+      "title": "The grand staircase at Omni San Francisco",
+      "desc": "Chandeliers, dark wood and a staircase made for a red dress. The Omni San Francisco lobby.",
+      "place": "omni-san-francisco-hotel",
+      "city": "san-francisco",
+      "cats": [
+        "hotels"
+      ],
+      "duration": 16
+    }
+  ]
+}

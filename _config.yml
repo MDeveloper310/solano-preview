@@ -1,0 +1,7 @@
+# GitHub Pages (Jekyll) settings: keep notes and build tools off the public site.
+exclude:
+  - README.md
+  - LAUNCH-CHECKLIST.md
+  - _build
+include:
+  - .well-known
