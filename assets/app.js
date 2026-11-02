@@ -191,20 +191,25 @@
   }
 
   /* ================= SIGN-IN BOX ================= */
-  function authBox(el, after) {
-    var emailForCode = "";
+  function authBox(el, after, opts) {
+    opts = opts || {}; var emailForCode = "";
     api.user().then(function (u) {
       if (u) { el.innerHTML = '<p class="small mute">Signed in as <strong>' + esc(u.email || "you") + '</strong>. <button type="button" class="linkbtn" data-signout>Sign out</button></p>'; after(u); return; }
       var intro = '<div class="card signin"><h2 style="margin-top:0">Sign in to continue</h2><p class="mute">We ask uploaders to sign in so every video has an accountable owner and we can tell you when it\'s reviewed. We never post anything for you.</p>';
       if (!LIVE) { el.innerHTML = intro + '<button type="button" class="btn" data-signin>Continue as demo user</button><p class="small mute">Demo mode: no real account is created.</p></div>'; after(null); return; }
-      el.innerHTML = intro + '<div data-google hidden><button type="button" class="btn" data-signin>Continue with Google</button><p class="small mute or">or use your email</p></div>' +
+      var draw = function (pr) {
+      if (opts.publicGate && !pr.google && !B.publicEmailSignIn) { el.innerHTML = ""; opts.publicGate(); after(null); return; }
+      el.innerHTML = intro + '<div data-google' + (pr.google ? "" : " hidden") + '><button type="button" class="btn" data-signin>Continue with Google</button><p class="small mute or">or use your email</p></div>' +
         '<form class="f" data-email-form novalidate><label>Email<input type="email" name="email" required maxlength="200" autocomplete="email" inputmode="email"></label>' +
         '<button class="btn" type="submit">Email me a sign-in link</button></form>' +
         '<form class="f" data-code-form hidden><p class="small" data-code-msg role="status"></p><label>6-digit code (if your email shows one)<input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,10}" maxlength="10" required></label>' +
         '<div class="row"><button class="btn" type="submit">Sign in</button><button type="button" class="btn ghost" data-restart>Use a different email</button></div></form>' +
         '<p class="f-status" data-auth-status role="status"></p></div>';
-      api.providers().then(function (pr) { if (pr.google) { var g = $("[data-google]", el); if (g) g.hidden = false; } });
+      if (opts.publicGate && !B.publicEmailSignIn) { $("[data-email-form]", el).hidden = true; $(".or", el).hidden = true; $("#up-staff").hidden = false; }
+      if (!pr.google && !B.publicEmailSignIn && !opts.publicGate) $(".signin > p.mute", el).insertAdjacentHTML("afterend", '<p class="small">Admin sign-in: we email you a sign-in link or code.</p>');
       after(null);
+      };
+      api.providers().then(draw);
     });
     function st(msg, cls) { var s = $("[data-auth-status]", el); if (s) { s.className = "f-status " + (cls || ""); s.textContent = msg; } }
     el.addEventListener("click", function (e) {
@@ -276,7 +281,8 @@
       v.onerror = function () { fmsg.className = "small err"; fmsg.textContent = "We couldn't read that video in this browser. Try exporting it as MP4 (H.264)."; };
     });
 
-    authBox($("#up-auth"), function (u) { form.hidden = !u; $("#up-mine-wrap").hidden = !u; if (u) mine(); });
+    authBox($("#up-auth"), function (u) { form.hidden = !u; $("#up-mine-wrap").hidden = !u; if (u) mine(); },
+      { publicGate: LIVE ? function () { $("#up-soon").hidden = false; $("#up-staff").hidden = false; } : null });
 
     form.addEventListener("submit", function (e) {
       e.preventDefault(); var st = $("#up-status");

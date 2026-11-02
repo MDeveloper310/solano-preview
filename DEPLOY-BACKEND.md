@@ -158,3 +158,9 @@ The sign-in box offers **email** always, and **Continue with Google** automatica
 ## If the report or claim form says "function digest(text, unknown) does not exist"
 
 Run `backend/fix-2026-11-01-ip-hash.sql` once in the SQL Editor (already included in `schema.sql` for new projects).
+
+## Opening uploads to the public (one switch)
+
+- **Google sign-in:** nothing to change in code. Enable the Google provider in Supabase and `/upload/` switches from "Uploads open soon, join the list" to "Continue with Google" automatically.
+- **Email sign-in for everyone:** only after custom SMTP is set up in Supabase, set `publicEmailSignIn: true` in `assets/config.js` (backend section) and push.
+- The admin always signs in at `/admin/` with an emailed link or code (the upload page has a small "Site admin sign-in" link).

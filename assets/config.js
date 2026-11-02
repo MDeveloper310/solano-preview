@@ -50,6 +50,15 @@ window.SC_CONFIG = {
     mode: "live",
     supabaseUrl: "https://mlaclpzbvdjkucyidaiq.supabase.co",          /* e.g. "https://abcdefghijklmnop.supabase.co" */
     supabaseKey: "sb_publishable_UtbozRjze-4Yv7MVqmXzGw_I0sGyLAk",          /* e.g. "sb_publishable_..." (publishable key ONLY) */
+    /* WHO CAN SIGN IN TO UPLOAD.
+       Google sign-in turns on by itself: the moment the Google provider is enabled in
+       Supabase (Authentication > Sign In / Providers > Google), the upload page opens.
+       publicEmailSignIn: set to true ONLY after custom SMTP is set up in Supabase
+       (Authentication > Emails > SMTP Settings). Supabase's built-in mailer only emails
+       your own team (about 2 per hour), so for the public it would silently fail.
+       While uploads are closed, /upload/ shows "Uploads open soon, join the list".
+       The admin page (/admin/) always offers email sign-in for you. */
+    publicEmailSignIn: false,
     uploadsBucket: "uploads", /* private bucket, created by backend/schema.sql */
     maxBytes: 50 * 1024 * 1024, /* 50 MB = Supabase free-plan per-file cap */
     maxSeconds: 60,

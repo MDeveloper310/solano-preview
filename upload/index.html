@@ -25,10 +25,10 @@
 <meta name="twitter:image" content="https://scrollcalifornia.com/og/og-default.jpg">
 <link rel="stylesheet" href="/assets/site.css?v=9149b017">
 
-<script src="/assets/config.js?v=dd414719" defer></script>
+<script src="/assets/config.js?v=d71214ed" defer></script>
 <script src="/assets/track.js?v=9120471b" defer></script>
 <script src="/assets/site.js?v=9c742e58" defer></script>
-<script src="/assets/app.js?v=414251f5" defer></script>
+<script src="/assets/app.js?v=93cbc640" defer></script>
 </head>
 <body data-app="1">
 <a class="skip" href="#main">Skip to content</a>
@@ -47,6 +47,18 @@
 <li>No music you don't own. We mute videos unless you tell us the sound is yours.</li>
 <li>You must be 18 or older. Read the <a href="/guidelines/">community guidelines</a>.</li>
 </ul>
+<div id="up-soon" class="card" hidden>
+<h2 style="margin-top:0">Uploads open soon</h2>
+<p>We're about to switch on visitor uploads. Join the list and we'll email you the moment you can post your food videos.</p>
+<form class="f inline-news" data-kind="newsletter" data-subject="Newsletter signup (uploads waitlist)" data-ok="You're on the list. We'll email you when uploads open." novalidate>
+<label class="sr" for="nl-upload">Email address</label>
+<input id="nl-upload" name="email" type="email" required autocomplete="email" placeholder="you@email.com">
+<span class="hp" aria-hidden="true"><input name="_honey" tabindex="-1" autocomplete="off"></span>
+<button class="btn" type="submit">Join the list</button>
+<p class="f-status small" role="status" style="flex-basis:100%;margin:0"></p>
+</form>
+<p class="small mute" style="margin-top:14px">Meanwhile, browse <a href="/cities/">food by city</a> or <a href="/">scroll the feed</a>. We use your email only for Scroll California updates. See our <a href="/privacy/">privacy policy</a>.</p>
+</div>
 <div id="up-auth" aria-live="polite"></div>
 <form class="f" id="up-form" hidden novalidate>
 <label>Video file
@@ -78,6 +90,7 @@
 <p class="small mute">We remove location data and other hidden metadata from videos before publishing. See our <a href="/privacy/">privacy policy</a>.</p>
 </form>
 <section id="up-mine-wrap" hidden><h2>Your uploads</h2><ul id="up-mine" class="plain"></ul></section>
+<p class="small mute staff-link" id="up-staff" hidden><a href="/admin/">Site admin sign-in</a></p>
 </div>
 
 <dialog class="report-dlg" id="report-dlg" aria-labelledby="rep-h"></dialog>
