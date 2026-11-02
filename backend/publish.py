@@ -57,9 +57,12 @@ def rest(method, table, query="", body=None, prefer=None):
     return req(method, f"/rest/v1/{table}{'?' + query if query else ''}", body, {"Prefer": prefer} if prefer else None)
 
 def load(p): return json.load(open(p)) if p.exists() else []
+WROTE = []
 def save(p, data):
+    text = json.dumps(data, ensure_ascii=False, indent=1) + "\n"
+    if p.exists() and p.read_text() == text: return          # unchanged: don't touch it
     if DRY: print("  (dry) would write", p.relative_to(ROOT)); return
-    p.write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n")
+    p.write_text(text); WROTE.append(p.name)
 
 def slugify(s): return re.sub(r"-+", "-", re.sub(r"[^a-z0-9]+", "-", (s or "").lower())).strip("-")[:60]
 
@@ -160,7 +163,8 @@ def main():
     if old and not DRY: req("DELETE", f"/storage/v1/object/{BUCKET}", {"prefixes": [o["storage_path"] for o in old]})
 
     save(UGC_JSON, ugc)
-    if not DRY:
+    changed = changed or bool(WROTE)
+    if changed and not DRY:   # rebuild only when something changed, so idle runs make no commit
         subprocess.run([sys.executable, str(ROOT / "_build/build.py")], check=True)
     print("done; changed" if changed else "done; nothing new")
 
