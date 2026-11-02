@@ -93,6 +93,10 @@
     user: function () { return sb().then(function (c) { return c.auth.getSession(); }).then(function (r) { return r.data.session ? r.data.session.user : null; }); },
     signIn: function () { return sb().then(function (c) { return c.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname + location.search } }); }).then(ok); },
     signOut: function () { return sb().then(function (c) { return c.auth.signOut(); }); },
+    /* email sign-in: Supabase emails a magic link (and a 6-digit code if the email template includes {{ .Token }}) */
+    emailCode: function (email) { return sb().then(function (c) { return c.auth.signInWithOtp({ email: email, options: { shouldCreateUser: true, emailRedirectTo: location.origin + location.pathname + location.search } }); }).then(ok); },
+    verifyCode: function (email, code) { return sb().then(function (c) { return c.auth.verifyOtp({ email: email, token: code, type: "email" }); }).then(ok); },
+    providers: function () { return fetch(B.supabaseUrl.replace(/\/$/, "") + "/auth/v1/settings", { headers: { apikey: B.supabaseKey } }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (j) { return j.external || {}; }).catch(function () { return {}; }); },
     isAdmin: function () { return sb().then(function (c) { return c.rpc("is_admin"); }).then(ok).then(Boolean); },
     upload: function (file, meta, onProg) {
       var client, user, mime = mimeOf(file), ext = mime === "video/quicktime" ? "mov" : mime === "video/webm" ? "webm" : "mp4";
@@ -188,15 +192,45 @@
 
   /* ================= SIGN-IN BOX ================= */
   function authBox(el, after) {
+    var emailForCode = "";
     api.user().then(function (u) {
       if (u) { el.innerHTML = '<p class="small mute">Signed in as <strong>' + esc(u.email || "you") + '</strong>. <button type="button" class="linkbtn" data-signout>Sign out</button></p>'; after(u); return; }
-      el.innerHTML = '<div class="card signin"><h2 style="margin-top:0">Sign in to continue</h2><p class="mute">We ask uploaders to sign in so every video has an accountable owner and we can tell you when it\'s reviewed. We never post anything for you.</p>' +
-        (LIVE ? '<button type="button" class="btn" data-signin>Continue with Google</button>' : '<button type="button" class="btn" data-signin>Continue as demo user</button><p class="small mute">Demo mode: no real account is created.</p>') + "</div>";
+      var intro = '<div class="card signin"><h2 style="margin-top:0">Sign in to continue</h2><p class="mute">We ask uploaders to sign in so every video has an accountable owner and we can tell you when it\'s reviewed. We never post anything for you.</p>';
+      if (!LIVE) { el.innerHTML = intro + '<button type="button" class="btn" data-signin>Continue as demo user</button><p class="small mute">Demo mode: no real account is created.</p></div>'; after(null); return; }
+      el.innerHTML = intro + '<div data-google hidden><button type="button" class="btn" data-signin>Continue with Google</button><p class="small mute or">or use your email</p></div>' +
+        '<form class="f" data-email-form novalidate><label>Email<input type="email" name="email" required maxlength="200" autocomplete="email" inputmode="email"></label>' +
+        '<button class="btn" type="submit">Email me a sign-in link</button></form>' +
+        '<form class="f" data-code-form hidden><p class="small" data-code-msg role="status"></p><label>6-digit code (if your email shows one)<input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,10}" maxlength="10" required></label>' +
+        '<div class="row"><button class="btn" type="submit">Sign in</button><button type="button" class="btn ghost" data-restart>Use a different email</button></div></form>' +
+        '<p class="f-status" data-auth-status role="status"></p></div>';
+      api.providers().then(function (pr) { if (pr.google) { var g = $("[data-google]", el); if (g) g.hidden = false; } });
       after(null);
     });
+    function st(msg, cls) { var s = $("[data-auth-status]", el); if (s) { s.className = "f-status " + (cls || ""); s.textContent = msg; } }
     el.addEventListener("click", function (e) {
       if (e.target.closest("[data-signin]")) api.signIn().then(function () { if (!LIVE) location.reload(); }).catch(function (er) { toast(er.message || "Sign-in failed"); });
       if (e.target.closest("[data-signout]")) api.signOut().then(function () { location.reload(); });
+      if (e.target.closest("[data-restart]")) { $("[data-code-form]", el).hidden = true; $("[data-email-form]", el).hidden = false; st(""); }
+    });
+    el.addEventListener("submit", function (e) {
+      var f = e.target;
+      if (f.matches("[data-email-form]")) {
+        e.preventDefault(); if (!f.checkValidity()) { f.reportValidity(); return; }
+        emailForCode = f.email.value.trim(); var b = $("button", f); b.disabled = true; st("Sending…");
+        api.emailCode(emailForCode).then(function () {
+          f.hidden = true; var cf = $("[data-code-form]", el); cf.hidden = false;
+          $("[data-code-msg]", el).innerHTML = "Check <strong>" + esc(emailForCode) + "</strong>. Open the link in this same browser, or type the code here. Check spam if you don't see it.";
+          st(""); cf.code.focus();
+        }).catch(function (er) {
+          var m = String(er && er.message || er);
+          st(/not authorized/i.test(m) ? "Email sign-in isn't open to every address yet. Please use Continue with Google, or try again later." : /rate|seconds|too many/i.test(m) ? "Too many sign-in emails right now. Please wait a bit and try again." : "Couldn't send the email: " + m, "err");
+        }).then(function () { b.disabled = false; });
+      } else if (f.matches("[data-code-form]")) {
+        e.preventDefault(); if (!f.checkValidity()) { f.reportValidity(); return; }
+        st("Checking…");
+        api.verifyCode(emailForCode, f.code.value.trim()).then(function () { location.reload(); })
+          .catch(function (er) { st("That code didn't work: " + (er.message || er), "err"); });
+      }
     });
   }
 

@@ -145,3 +145,16 @@ Then run `python3 _build/build.py` (this updates the `?v=` cache-busters) and co
 - Review the draft `/terms/` (user-content license, 18+), `/privacy/` (Google sign-in, Supabase as processor, CCPA rights), `/guidelines/` and `/dmca/`.
 - Music: clips are **muted on publish** unless the uploader ticks "keep original sound". When approving with sound on, listen for commercial music.
 - Respond to reports quickly, especially privacy, minors and copyright reports.
+
+
+## Email sign-in (magic link / 6-digit code)
+
+The sign-in box offers **email** always, and **Continue with Google** automatically once the Google provider is switched on in Supabase (the page checks `/auth/v1/settings`).
+
+1. Supabase > Authentication > URL Configuration: **Site URL** `https://scrollcalifornia.com`, **Redirect URLs** `https://scrollcalifornia.com/**`. Without this the email link goes to `localhost:3000`.
+2. Optional, to get a typed code as well as the link: Authentication > Emails > Templates > **Magic Link** and **Confirm signup**: add `Your code: {{ .Token }}` to the body.
+3. Limit: Supabase's built-in mailer only delivers to members of your Supabase organization and about 2 emails per hour. So email sign-in works for you (the admin) now; for the public, use Google sign-in, or later add a free SMTP provider (Authentication > Emails > SMTP Settings). Most free SMTP providers need DNS records on your domain.
+
+## If the report or claim form says "function digest(text, unknown) does not exist"
+
+Run `backend/fix-2026-11-01-ip-hash.sql` once in the SQL Editor (already included in `schema.sql` for new projects).

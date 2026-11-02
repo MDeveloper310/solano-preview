@@ -157,7 +157,7 @@ grant execute on function public.hidden_slugs() to anon, authenticated;
 
 -- ---------- helpers for anonymous forms ----------
 create or replace function public.client_ip_hash() returns text
-language sql stable as $$
+language sql stable set search_path = public, extensions as $$  -- Supabase keeps pgcrypto in the extensions schema
   select encode(digest(coalesce(split_part(current_setting('request.headers', true)::json->>'x-forwarded-for', ',', 1), 'unknown') || ':sc-salt', 'sha256'), 'hex');
 $$;
 

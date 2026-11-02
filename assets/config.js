@@ -47,9 +47,9 @@ window.SC_CONFIG = {
      ONLY the Project URL and the PUBLISHABLE key (sb_publishable_...) go here.
      NEVER paste the secret / service_role key in this file. */
   backend: {
-    mode: "demo",
-    supabaseUrl: "",          /* e.g. "https://abcdefghijklmnop.supabase.co" */
-    supabaseKey: "",          /* e.g. "sb_publishable_..." (publishable key ONLY) */
+    mode: "live",
+    supabaseUrl: "https://mlaclpzbvdjkucyidaiq.supabase.co",          /* e.g. "https://abcdefghijklmnop.supabase.co" */
+    supabaseKey: "sb_publishable_UtbozRjze-4Yv7MVqmXzGw_I0sGyLAk",          /* e.g. "sb_publishable_..." (publishable key ONLY) */
     uploadsBucket: "uploads", /* private bucket, created by backend/schema.sql */
     maxBytes: 50 * 1024 * 1024, /* 50 MB = Supabase free-plan per-file cap */
     maxSeconds: 60,
