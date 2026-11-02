@@ -37,6 +37,26 @@ window.SC_CONFIG = {
      //   slots:["feed","home","city:vacaville","place:*","category:restaurants"],
      //   start:"2026-11-01", end:"2026-11-30" }
   */
+
+  /* 7) BACKEND for visitor uploads, reports and claims.
+     mode: "demo"  = nothing leaves the browser. Uploads, reports, claims and the
+                     admin queue are stored on THIS device only (IndexedDB/localStorage),
+                     so the whole flow can be tested without any account.
+           "live"  = uses the Supabase project below. Paste the two values from
+                     Supabase > Project Settings > API Keys (see DEPLOY-BACKEND.md).
+     ONLY the Project URL and the PUBLISHABLE key (sb_publishable_...) go here.
+     NEVER paste the secret / service_role key in this file. */
+  backend: {
+    mode: "demo",
+    supabaseUrl: "",          /* e.g. "https://abcdefghijklmnop.supabase.co" */
+    supabaseKey: "",          /* e.g. "sb_publishable_..." (publishable key ONLY) */
+    uploadsBucket: "uploads", /* private bucket, created by backend/schema.sql */
+    maxBytes: 50 * 1024 * 1024, /* 50 MB = Supabase free-plan per-file cap */
+    maxSeconds: 60,
+    minSeconds: 3,
+    /* link the admin page's "Publish now" button to the GitHub Action */
+    publishUrl: "https://github.com/MDeveloper310/solano-preview/actions/workflows/publish-uploads.yml"
+  },
   sponsors: [],
   feedSponsorEvery: 5   /* a sponsor card after every N videos (only if a "feed" sponsor exists) */
 };

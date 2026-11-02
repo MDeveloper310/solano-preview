@@ -1,0 +1,43 @@
+<!-- {"path":"/upload/","title":"Upload a food video | Scroll California","desc":"Share a short food video from a California restaurant. Pick the city and place, tag the dish, and a person reviews it before it goes live.","priority":0.5} -->
+<div class="wrap narrow" id="upload-app">
+<p class="kicker">Share a food video</p>
+<h1>Upload a food video</h1>
+<p class="lead">Filmed something delicious in California? Add it to the city and the place. <strong>A person reviews every video before anyone else can see it.</strong></p>
+<ul class="rules small">
+<li>Food only, filmed by you, at a real California place.</li>
+<li>Up to 60 seconds and 50 MB. MP4, MOV or WebM. Vertical (9:16) looks best.</li>
+<li>No music you don't own. We mute videos unless you tell us the sound is yours.</li>
+<li>You must be 18 or older. Read the <a href="/guidelines/">community guidelines</a>.</li>
+</ul>
+<div id="up-auth" aria-live="polite"></div>
+<form class="f" id="up-form" hidden novalidate>
+<label>Video file
+<input id="up-file" name="file" type="file" accept="video/mp4,video/quicktime,video/webm,.mp4,.mov,.webm" required aria-describedby="up-file-msg"></label>
+<p id="up-file-msg" class="small" role="status"></p>
+<div id="up-preview" class="player small-player" hidden><video controls playsinline muted></video></div>
+<label>City<select id="up-city" name="city" required></select></label>
+<label id="up-other-city" hidden>Which California city?<input name="other_city" maxlength="60" placeholder="e.g. Benicia"></label>
+<label>Place<select id="up-place" name="place" required disabled></select></label>
+<fieldset id="up-newplace" class="card" hidden><legend>Suggest the place</legend>
+<p class="small mute">We check every new place before it gets a page.</p>
+<label>Place name<input id="np-name" data-req maxlength="100"></label>
+<label>Street address<input id="np-street" data-req maxlength="160" placeholder="123 Main St"></label>
+<label>Website or Instagram (optional)<input id="np-web" type="url" maxlength="200" placeholder="https://"></label>
+</fieldset>
+<label>What's the food?<select id="up-dish" name="dish" required></select></label>
+<label>Caption <span class="small mute" id="up-count">0/300</span><textarea id="up-caption" name="caption" required minlength="3" maxlength="300" rows="3" placeholder="What did you order? Worth it?"></textarea></label>
+<label>Show my name as (optional)<input id="up-credit" name="credit" maxlength="40" placeholder="e.g. @yourhandle or first name"></label>
+<label class="check"><input type="checkbox" id="up-audio"> <span>Keep the original sound. Only tick this if there's no music or audio you don't own. Otherwise we publish it muted.</span></label>
+<fieldset class="consent"><legend>Please confirm (all required)</legend>
+<label class="check"><input type="checkbox" required> <span>I filmed this video myself (or own all rights to it), and anyone clearly shown agreed to be filmed.</span></label>
+<label class="check"><input type="checkbox" required> <span>It has no copyrighted music, TV, film or other people's content, or I have permission to use it.</span></label>
+<label class="check"><input type="checkbox" required> <span>I'm 18 or older.</span></label>
+<label class="check"><input type="checkbox" required> <span>I agree to the <a href="/terms/#user-content" target="_blank">Terms</a> and <a href="/guidelines/" target="_blank">community guidelines</a>, and I give Scroll California a free license to show, crop, mute and share this video on the site, newsletter and social accounts with credit. I can ask for it to be removed at any time.</span></label>
+</fieldset>
+<progress id="up-bar" max="100" value="0" hidden aria-label="Upload progress"></progress>
+<button class="btn" type="submit">Upload for review</button>
+<p class="f-status" id="up-status" role="status" aria-live="polite"></p>
+<p class="small mute">We remove location data and other hidden metadata from videos before publishing. See our <a href="/privacy/">privacy policy</a>.</p>
+</form>
+<section id="up-mine-wrap" hidden><h2>Your uploads</h2><ul id="up-mine" class="plain"></ul></section>
+</div>

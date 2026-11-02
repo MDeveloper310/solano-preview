@@ -1,0 +1,20 @@
+<!-- {"path":"/admin/","title":"Review queue | Scroll California","desc":"Moderation queue for Scroll California.","robots":"noindex,nofollow"} -->
+<div class="wrap" id="admin-app">
+<p class="kicker">Admins only</p>
+<h1>Review queue</h1>
+<div id="adm-auth"></div>
+<div id="adm-denied" class="card" hidden><h2 style="margin-top:0">Not an admin</h2><p>This account isn't on the admin list. To add it, run this in the Supabase SQL editor:</p><pre><code>insert into public.admins (user_id) values ('<span id="adm-uid"></span>');</code></pre></div>
+<div id="adm-main" hidden>
+<p class="row"><a class="btn ghost" id="adm-publish" href="#" target="_blank" rel="noopener">Publish now (GitHub Action)</a><span class="small mute">Approved videos go live when the publish job runs (every hour, or when you click this).</span></p>
+<div class="tabs" role="tablist" aria-label="Queues">
+<button role="tab" aria-selected="true" aria-controls="q-pending" id="t-pending">Uploads<span data-count="pending"></span></button>
+<button role="tab" aria-selected="false" aria-controls="q-reports" id="t-reports">Reports<span data-count="reports"></span></button>
+<button role="tab" aria-selected="false" aria-controls="q-claims" id="t-claims">Claims<span data-count="claims"></span></button>
+<button role="tab" aria-selected="false" aria-controls="q-done" id="t-done">Reviewed</button>
+</div>
+<section id="q-pending" role="tabpanel" aria-labelledby="t-pending"></section>
+<section id="q-reports" role="tabpanel" aria-labelledby="t-reports" hidden></section>
+<section id="q-claims" role="tabpanel" aria-labelledby="t-claims" hidden></section>
+<section id="q-done" role="tabpanel" aria-labelledby="t-done" hidden></section>
+</div>
+</div>

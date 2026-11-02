@@ -1,0 +1,53 @@
+# Publishes approved visitor uploads as static files (see backend/publish.py).
+# Needs repo secrets SUPABASE_URL and SUPABASE_SECRET_KEY.
+# Does nothing (and stays green) until those secrets exist.
+name: Publish approved uploads
+on:
+  schedule:
+    - cron: "17 * * * *"      # every hour (also keeps the free Supabase project from pausing)
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency:
+  group: publish-uploads
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check secrets
+        id: cfg
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SECRET_KEY" ]; then
+            echo "Secrets not set yet; skipping."; echo "ok=false" >> "$GITHUB_OUTPUT"
+          else echo "ok=true" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/checkout@v4
+        if: steps.cfg.outputs.ok == 'true'
+      - uses: actions/setup-python@v5
+        if: steps.cfg.outputs.ok == 'true'
+        with: { python-version: "3.12" }
+      - name: Install ffmpeg + Pillow
+        if: steps.cfg.outputs.ok == 'true'
+        run: |
+          sudo apt-get update -q && sudo apt-get install -y -q ffmpeg fonts-dejavu-core
+          pip install -q pillow
+      - name: Publish
+        if: steps.cfg.outputs.ok == 'true'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: python3 backend/publish.py
+      - name: Commit and push
+        if: steps.cfg.outputs.ok == 'true'
+        run: |
+          git config user.name "scroll-california-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A media/ugc _build/ugc.json _build/ugc_places.json _build/ugc_cities.json
+          git add -A -- . ':!backend' ':!.github'
+          if git diff --cached --quiet; then echo "Nothing to publish."; exit 0; fi
+          git commit -m "Publish approved uploads [$(date -u +%Y-%m-%dT%H:%MZ)]"
+          git pull --rebase -q && git push

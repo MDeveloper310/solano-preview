@@ -64,14 +64,17 @@
         } else { v.pause(); }
       });
     }, { threshold: [0, 0.6, 1] });
-    feed.querySelectorAll(".clip").forEach(function (c) {
+    function setupClip(c) {
       io.observe(c);
       var v = c.querySelector("video");
       if (v) {
         v.addEventListener("play", function () { c.classList.remove("paused"); });
         v.addEventListener("pause", function () { c.classList.add("paused"); });
       }
-    });
+    }
+    feed.querySelectorAll(".clip").forEach(setupClip);
+    /* app.js uses this to add demo-mode uploads to the top of the feed */
+    window.SCFeed = { add: function (li, atTop) { var top = window.scrollY < 40; if (atTop) feed.insertBefore(li, feed.firstChild); else feed.appendChild(li); setupClip(li); applyFilter(); if (atTop && top) window.scrollTo(0, 0); } };
     feed.addEventListener("click", function (e) {
       var t = e.target.closest(".tap"); if (!t) return;
       var c = t.closest(".clip"), v = c.querySelector("video"); if (!v) return;
@@ -80,14 +83,15 @@
     });
     /* filters */
     function applyFilter() {
-      var cat = (location.hash.match(/^#(restaurants|hotels|all)$/) || [0, "all"])[1];
+      var cat = (location.hash.match(/^#((?:city|dish)-[a-z0-9-]+|all)$/) || [0, "all"])[1];
+      if (cat !== "all" && !feed.querySelector('.clip[data-cats~="' + cat + '"]')) cat = "all";
       feed.querySelectorAll(".clip").forEach(function (c) { c.hidden = (" " + (c.dataset.cats || "") + " ").indexOf(" " + cat + " ") < 0; });
-      d.querySelectorAll(".chips a").forEach(function (a) { a.setAttribute("aria-current", a.getAttribute("href") === "#" + cat ? "true" : "false"); });
+      d.querySelectorAll(".chips a").forEach(function (a) { var on = a.getAttribute("href") === "#" + cat; a.setAttribute("aria-current", on ? "true" : "false"); if (on && a.scrollIntoView && location.hash) a.scrollIntoView({ block: "nearest", inline: "center" }); });
       var first = feed.querySelector(".clip:not([hidden])"); if (first && location.hash) first.scrollIntoView();
     }
     window.addEventListener("hashchange", applyFilter); applyFilter();
     d.addEventListener("keydown", function (e) {
-      if (e.target.closest("input,textarea")) return;
+      if (e.target.closest("input,textarea,select,dialog")) return;
       if (e.key === "ArrowDown" || e.key === "j" || e.key === "ArrowUp" || e.key === "k") {
         var list = [].slice.call(feed.querySelectorAll(".clip:not([hidden])")), y = innerHeight / 2, i = list.findIndex(function (c) { var r = c.getBoundingClientRect(); return r.top <= y && r.bottom >= y; });
         var nx = list[i + ((e.key === "ArrowDown" || e.key === "j") ? 1 : -1)]; if (nx) { e.preventDefault(); nx.scrollIntoView({ behavior: "smooth" }); }
@@ -113,6 +117,16 @@
         .then(function (r) { if (!r.ok) throw 0; st.className = "f-status ok"; st.textContent = f.dataset.ok || "Thanks! We got it."; f.reset(); track("form_submit", kind); })
         .catch(function () { st.className = "f-status err"; st.innerHTML = 'That didn\'t go through. Please try again, or DM us on <a href="' + esc(cfg.instagram) + '">Instagram</a>.'; })
         .then(function () { btn.disabled = false; });
+    });
+  });
+
+  /* city page: filter place cards by food */
+  d.querySelectorAll(".filter[role=group]").forEach(function (g) {
+    g.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-filter]"); if (!b) return;
+      g.querySelectorAll("[data-filter]").forEach(function (x) { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b); });
+      var f = b.dataset.filter, list = g.nextElementSibling;
+      if (list) list.querySelectorAll("[data-dishes]").forEach(function (c) { c.hidden = f && (" " + c.dataset.dishes + " ").indexOf(" " + f + " ") < 0; });
     });
   });
 

@@ -75,17 +75,23 @@
     {
       "slug": "vacaville",
       "name": "Vacaville",
-      "intro": "Vacaville sits on I-80 between the Bay Area and Sacramento. Here's what we've filmed there so far, starting with a Brazilian steakhouse worth the drive."
+      "intro": "Vacaville sits on I-80 between the Bay Area and Sacramento. Here's what we've filmed there so far, starting with a Brazilian steakhouse worth the drive.",
+      "lat": 38.3566,
+      "lng": -121.9877
     },
     {
       "slug": "fairfield",
       "name": "Fairfield",
-      "intro": "Fairfield is an easy I-80 stop between San Francisco and Sacramento, and close to wine country. Here's where we've eaten and filmed."
+      "intro": "Fairfield is an easy I-80 stop between San Francisco and Sacramento, and close to wine country. Here's where we've eaten and filmed.",
+      "lat": 38.2494,
+      "lng": -122.04
     },
     {
       "slug": "san-francisco",
       "name": "San Francisco",
-      "intro": "San Francisco food and stays, filmed by us. We're starting downtown, on the cable car line."
+      "intro": "San Francisco food and stays, filmed by us. We're starting downtown, on the cable car line.",
+      "lat": 37.7749,
+      "lng": -122.4194
     }
   ],
   "videos": [
@@ -98,7 +104,19 @@
       "cats": [
         "restaurants"
       ],
-      "duration": 24
+      "duration": 24,
+      "dishes": [
+        "steak",
+        "brazilian",
+        "cocktails"
+      ],
+      "food": true,
+      "creator": {
+        "name": "Crenshaw Visuals",
+        "url": "https://crenshawvisuals.com",
+        "owned": true
+      },
+      "uploaded": "2026-11-01"
     },
     {
       "slug": "tableside-flambe",
@@ -109,7 +127,17 @@
       "cats": [
         "restaurants"
       ],
-      "duration": 17
+      "duration": 17,
+      "dishes": [
+        "desserts"
+      ],
+      "food": true,
+      "creator": {
+        "name": "Crenshaw Visuals",
+        "url": "https://crenshawvisuals.com",
+        "owned": true
+      },
+      "uploaded": "2026-11-01"
     },
     {
       "slug": "omni-sf-in-room-dining",
@@ -121,7 +149,19 @@
         "restaurants",
         "hotels"
       ],
-      "duration": 22
+      "duration": 22,
+      "dishes": [
+        "burgers",
+        "desserts",
+        "hotel-dining"
+      ],
+      "food": true,
+      "creator": {
+        "name": "Crenshaw Visuals",
+        "url": "https://crenshawvisuals.com",
+        "owned": true
+      },
+      "uploaded": "2026-11-01"
     },
     {
       "slug": "hilton-garden-inn-fairfield-food",
@@ -133,7 +173,19 @@
         "restaurants",
         "hotels"
       ],
-      "duration": 24
+      "duration": 24,
+      "dishes": [
+        "tacos",
+        "cocktails",
+        "hotel-dining"
+      ],
+      "food": true,
+      "creator": {
+        "name": "Crenshaw Visuals",
+        "url": "https://crenshawvisuals.com",
+        "owned": true
+      },
+      "uploaded": "2026-11-01"
     },
     {
       "slug": "omni-sf-stay",
@@ -144,7 +196,17 @@
       "cats": [
         "hotels"
       ],
-      "duration": 28
+      "duration": 28,
+      "dishes": [
+        "hotel-dining"
+      ],
+      "food": true,
+      "creator": {
+        "name": "Crenshaw Visuals",
+        "url": "https://crenshawvisuals.com",
+        "owned": true
+      },
+      "uploaded": "2026-11-01"
     },
     {
       "slug": "omni-sf-lobby",
@@ -155,7 +217,97 @@
       "cats": [
         "hotels"
       ],
-      "duration": 16
+      "duration": 16,
+      "dishes": [],
+      "food": false,
+      "creator": {
+        "name": "Crenshaw Visuals",
+        "url": "https://crenshawvisuals.com",
+        "owned": true
+      },
+      "uploaded": "2026-11-01"
+    }
+  ],
+  "dishes": [
+    {
+      "slug": "tacos",
+      "name": "Tacos",
+      "emoji": "🌮"
+    },
+    {
+      "slug": "pizza",
+      "name": "Pizza",
+      "emoji": "🍕"
+    },
+    {
+      "slug": "burgers",
+      "name": "Burgers",
+      "emoji": "🍔"
+    },
+    {
+      "slug": "brunch",
+      "name": "Brunch",
+      "emoji": "🥞"
+    },
+    {
+      "slug": "bbq",
+      "name": "BBQ",
+      "emoji": "🍖"
+    },
+    {
+      "slug": "steak",
+      "name": "Steak",
+      "emoji": "🥩"
+    },
+    {
+      "slug": "brazilian",
+      "name": "Brazilian",
+      "emoji": "🇧🇷"
+    },
+    {
+      "slug": "mexican",
+      "name": "Mexican",
+      "emoji": "🌶️"
+    },
+    {
+      "slug": "seafood",
+      "name": "Seafood",
+      "emoji": "🦐"
+    },
+    {
+      "slug": "sushi",
+      "name": "Sushi",
+      "emoji": "🍣"
+    },
+    {
+      "slug": "noodles",
+      "name": "Ramen & noodles",
+      "emoji": "🍜"
+    },
+    {
+      "slug": "desserts",
+      "name": "Desserts",
+      "emoji": "🍨"
+    },
+    {
+      "slug": "coffee",
+      "name": "Coffee & bakeries",
+      "emoji": "☕"
+    },
+    {
+      "slug": "cocktails",
+      "name": "Drinks & cocktails",
+      "emoji": "🍸"
+    },
+    {
+      "slug": "vegan",
+      "name": "Vegan & vegetarian",
+      "emoji": "🥗"
+    },
+    {
+      "slug": "hotel-dining",
+      "name": "Hotel dining",
+      "emoji": "🛎️"
     }
   ]
 }

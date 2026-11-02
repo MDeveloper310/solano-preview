@@ -29,3 +29,11 @@ Keep the `CNAME` file in the repo root. If the domain ever stops resolving, the 
 - [ ] **Form relay test.** Send one test on /submit/ and confirm it reaches the inbox (FormSubmit relay inherited from the old site).
 - [ ] **Lawyer review** of /privacy/ and /terms/ (plain-language drafts).
 - [ ] **More footage.** Each new shoot = one video entry in `_build/content.json`. City pages with one place are thin; 3+ places per city is the goal before promoting a city.
+
+## v2: visitor uploads (do in this order)
+- [ ] Merge branch `v2-uploads` into `main` (site keeps working in demo mode until the next steps).
+- [ ] Follow `DEPLOY-BACKEND.md` steps 1–6 (Supabase free project, schema, Google sign-in, config.js, GitHub secrets, admin).
+- [ ] Run the end-to-end test in DEPLOY-BACKEND.md step 7.
+- [ ] Register a DMCA agent ($6) and fill in `/dmca/`. Have a lawyer review terms/privacy/guidelines.
+- [ ] Check the review queue at least daily; reply to reports and claims.
+- [ ] Before ~200 published uploads (GitHub Pages 1 GB limit), move `/media/ugc/` to a CDN or object storage.

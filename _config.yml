@@ -3,5 +3,9 @@ exclude:
   - README.md
   - LAUNCH-CHECKLIST.md
   - _build
+  - backend
+  - screens
+  - DEPLOY-BACKEND.md
+  - .github
 include:
   - .well-known
